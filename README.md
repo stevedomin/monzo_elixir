@@ -1,4 +1,4 @@
-# Mondo
+# Mondo Elixir
 
 [![Build Status](https://travis-ci.org/stevedomin/mondo_elixir.svg?branch=master)](https://travis-ci.org/stevedomin/mondo_elixir)
 
