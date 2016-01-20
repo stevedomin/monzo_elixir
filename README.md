@@ -1,5 +1,7 @@
 # Mondo
 
+[![Build Status](https://travis-ci.org/stevedomin/mondo_elixir.svg?branch=master)](https://travis-ci.org/stevedomin/mondo_elixir)
+
 An Elixir client for the [Mondo](https://getmondo.co.uk/) API.
 
 ## Installation
