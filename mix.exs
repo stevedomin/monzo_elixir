@@ -8,7 +8,9 @@ defmodule Mondo.Mixfile do
      elixirc_paths: elixirc_paths(Mix.env),
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
-     deps: deps]
+     deps: deps,
+     description: description,
+     package: package]
   end
 
   # Configuration for the OTP application
@@ -39,5 +41,17 @@ defmodule Mondo.Mixfile do
      {:poison, "~> 2.0"},
      {:ex_machina, "~> 0.6.1", only: :test},
      {:bypass, "~> 0.1", only: :test}]
+  end
+
+  defp description do
+    """
+    An Elixir client for the Mondo API.
+    """
+  end
+
+  defp package do
+    [maintainers: ["Steve Domin"],
+     licenses: ["MIT"],
+     links: %{"GitHub" => "https://github.com/stevedomin/mondo_elixir"}]
   end
 end
