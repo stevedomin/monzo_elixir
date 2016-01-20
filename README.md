@@ -53,3 +53,7 @@ iex> Mondo.Transaction.List(client, account.id)
 * Refresh token
 * Better support for error code: 405, 406, 429, 500, 504
 
+## LICENSE
+
+See [LICENSE](https://github.com/stevedomin/mondo-elixir/blob/master/LICENSE)
+
