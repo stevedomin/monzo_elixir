@@ -83,7 +83,7 @@ defmodule Mondo.Client do
     uri =
       url(path, :empty)
       |> URI.parse
-      |> Map.put(:query, URI.encode_query(params))
+      |> Map.put(:query, Plug.Conn.Query.encode(params))
     URI.to_string(uri)
   end
 end
