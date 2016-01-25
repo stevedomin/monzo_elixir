@@ -35,6 +35,19 @@ defmodule Mondo.TransactionTest do
     assert {:error, _reason} = Transaction.list(client, "123")
   end
 
+  test "list transactions with merchants info", %{bypass: bypass, client: client} do
+    transactions = build_list(3, :transaction, merchant: build(:merchant))
+    account = build(:account)
+    Bypass.expect bypass, fn conn ->
+      conn = Plug.Conn.fetch_query_params(conn)
+      assert "/transactions" == conn.request_path
+      assert %{"account_id" => account.id, "expand" => ["merchant"]} == conn.query_params
+      assert "GET" == conn.method
+      Plug.Conn.resp(conn, 200, Poison.encode!(%{"transactions" => transactions}))
+    end
+    assert {:ok, transactions} == Transaction.list(client, account.id, merchant: true)
+  end
+
   test "get an existing transaction", %{bypass: bypass, client: client} do
     transaction = build(:transaction)
     Bypass.expect bypass, fn conn ->
@@ -53,4 +66,17 @@ defmodule Mondo.TransactionTest do
     end
     assert {:error, _reason} = Transaction.get(client, "123")
   end
+
+  test "get an existing transaction with merchant info", %{bypass: bypass, client: client} do
+    transaction = build(:transaction, merchant: build(:merchant))
+    Bypass.expect bypass, fn conn ->
+      conn = Plug.Conn.fetch_query_params(conn)
+      assert "/transactions/#{transaction.id}" == conn.request_path
+      assert %{"expand" => ["merchant"]} == conn.query_params
+      assert "GET" == conn.method
+      Plug.Conn.resp(conn, 200, Poison.encode!(%{"transaction" => transaction}))
+    end
+    assert {:ok, transaction} == Transaction.get(client, transaction.id, merchant: true)
+  end
+
 end

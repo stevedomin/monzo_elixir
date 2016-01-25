@@ -39,6 +39,36 @@ defmodule Mondo.Factory do
     }
   end
 
+  def factory(:merchant) do
+    %Mondo.Merchant{
+      address: nil,
+      category: "shopping",
+      created: "2015-10-30T10:00:00.000Z",
+      emoji: "",
+      group_id: sequence(:group_id, &"grp_#{&1}"),
+      id: sequence(:id, &"merch_#{&1}"),
+      logo: "https://theavengers.com/logo.png",
+      name: "Avengers Ltd",
+      online: true
+    }
+  end
+
+  def factory(:address) do
+    %Mondo.Address{
+      address: "85 Albert Embankment",
+      approximate: false,
+      city: "London",
+      country: "GBR",
+      formatted: "85 Albert Embankment, London SE1 7TP, United-Kingdom",
+      latitude: "51.4873",
+      longitude: "0.1243",
+      postcode: "SE1 7TP",
+      region: "Greater London",
+      short_formatted: "85 Albert Embankment, London SE1 7TP",
+      zoom_level: 10
+    }
+  end
+
   def factory(:transaction) do
     %Mondo.Transaction{
       account_balance: 100000,
@@ -49,7 +79,7 @@ defmodule Mondo.Factory do
       decline_reason: nil,
       description: "Iron Man armor",
       id: sequence(:id, &"tx_#{&1}"),
-      merchant: nil,
+      merchant: sequence(:merchant, &"merch_#{&1}"),
       metadata: %{},
       notes: "Collector item",
       is_load: false,

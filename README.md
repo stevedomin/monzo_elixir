@@ -46,7 +46,6 @@ iex> Mondo.Transaction.List(client, account.id)
 
 ## TODO
 
-* Object expansion
 * Pagination
 * Attachments
 * Annotate transaction

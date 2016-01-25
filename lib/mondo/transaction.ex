@@ -18,7 +18,7 @@ defmodule Mondo.Transaction do
     decline_reason: String.t,
     description: String.t,
     id: String.t,
-    # merchant: String.t | Merchant.t,
+    merchant: Mondo.Merchant.t,
     metadata: map,
     notes: String.t,
     is_load: boolean,
@@ -29,9 +29,10 @@ defmodule Mondo.Transaction do
   List transactions
   """
   @spec list(Mondo.Client.t, String.t) :: {:ok, [Mondo.Transaction.t]} | {:error, Mondo.Error.t}
-  def list(client, account_id) do
-    with {:ok, body} <- Mondo.Client.get(client, @endpoint, %{"account_id" => account_id}),
-         {:ok, %{"transactions" => transactions}} <- Poison.decode(body, as: %{"transactions" => [%Mondo.Transaction{}]}),
+  def list(client, account_id, opts \\ []) do
+    {params, as} = Keyword.get(opts, :merchant, false) |> with_merchant(%{"account_id" => account_id})
+    with {:ok, body} <- Mondo.Client.get(client, @endpoint, params),
+         {:ok, %{"transactions" => transactions}} <- Poison.decode(body, as: %{"transactions" => [as]}),
     do: {:ok, transactions}
   end
 
@@ -39,9 +40,24 @@ defmodule Mondo.Transaction do
   Get a transaction
   """
   @spec get(Mondo.Client.t, String.t) :: {:ok, Mondo.Transaction.t} | {:error, Mondo.Error.t}
-  def get(client, transaction_id) do
-    with {:ok, body} <- Mondo.Client.get(client, @endpoint <> "/" <> transaction_id),
-         {:ok, %{"transaction" => transaction}} <- Poison.decode(body, as: %{"transaction" => %Mondo.Transaction{}}),
+  def get(client, transaction_id, opts \\ []) do
+    {params, as} = Keyword.get(opts, :merchant, false) |> with_merchant(%{})
+
+    with {:ok, body} <- Mondo.Client.get(client, @endpoint <> "/" <> transaction_id, params),
+         {:ok, %{"transaction" => transaction}} <- Poison.decode(body, as: %{"transaction" => as}),
     do: {:ok, transaction}
   end
+
+  @doc false
+  @spec with_merchant(boolean, map) :: {map, Mondo.Transaction.t}
+  defp with_merchant(true, params) do
+    params = Map.put(params, :expand, ["merchant"])
+    as = %Mondo.Transaction{merchant: %Mondo.Merchant{address: %Mondo.Address{}}}
+    {params, as}
+  end
+  defp with_merchant(_, params) do
+    as = %Mondo.Transaction{}
+    {params, as}
+  end
 end
+
