@@ -54,5 +54,5 @@ iex> Mondo.Transaction.List(client, account.id)
 
 ## LICENSE
 
-See [LICENSE](https://github.com/stevedomin/mondo-elixir/blob/master/LICENSE)
+See [LICENSE](https://github.com/stevedomin/mondo_elixir/blob/master/LICENSE)
 
