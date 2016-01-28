@@ -5,23 +5,27 @@ defmodule Mondo.Transaction do
 
   @endpoint "transactions"
 
-  defstruct account_balance: nil, amount: nil, category: nil, created: nil,
-            currency: nil, decline_reason: nil, description: nil, id: nil,
-            merchant: nil, metadata: nil, notes: nil, is_load: nil, settled: nil
+  defstruct account_balance: nil, amount: nil, attachments: nil, category: nil,
+            created: nil, currency: nil, decline_reason: nil, description: nil,
+            id: nil, is_load: nil, local_amount: nil, local_currency: nil,
+            merchant: nil, metadata: nil, notes: nil, settled: nil
 
   @type t :: %__MODULE__{
     account_balance: integer,
     amount: integer,
+    attachments: list,
     category: String.t,
     created: String.t,
     currency: String.t,
     decline_reason: String.t,
     description: String.t,
     id: String.t,
+    is_load: boolean,
+    local_amount: String.t,
+    local_currency: String.t,
     merchant: Mondo.Merchant.t,
     metadata: map,
     notes: String.t,
-    is_load: boolean,
     settled: boolean
   }
 
