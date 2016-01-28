@@ -4,6 +4,7 @@
 ### Added
 * Optionally expand merchant info when fetching transactions
 * Add missing fields on Mondo.Transaction: attachments, local_amount, local_currency
+* Add Mondo.refresh/1 for refreshing access token
 
 ### Changed
 * Bump poison to 2.0.1

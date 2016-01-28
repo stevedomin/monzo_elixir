@@ -9,17 +9,29 @@ defmodule Mondo.ClientTest do
     {:ok, bypass: bypass, client: client}
   end
 
-  test "successful authentication", %{bypass: bypass, client: client} do
+  test "successful authentication", %{bypass: bypass} do
     Bypass.expect bypass, fn conn ->
       assert "/oauth2/token" == conn.request_path
       assert "POST" == conn.method
-      Plug.Conn.resp(conn, 200, Poison.encode!(client))
+      Plug.Conn.resp(conn, 200, Poison.encode!(%Mondo.Client{}))
     end
-    assert {:ok, client} ==
+    assert {:ok, _client} =
            Mondo.Client.authenticate("client_id", "client_secret", "user", "pass")
   end
 
   test "failed auth" do
+  end
+
+  test "refresh token", %{bypass: bypass, client: client} do
+    Bypass.expect bypass, fn conn ->
+      assert "/oauth2/token" == conn.request_path
+      assert "POST" == conn.method
+      new_client = %Mondo.Client{client | access_token: "new_token"}
+      Plug.Conn.resp(conn, 200, Poison.encode!(new_client))
+    end
+    assert {:ok, client} =
+           Mondo.Client.refresh(client)
+    assert client.access_token == "new_token"
   end
 
   test "ping with an authenticated client", %{bypass: bypass, client: client} do

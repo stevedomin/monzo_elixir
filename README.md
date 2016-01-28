@@ -49,7 +49,6 @@ iex> Mondo.Transaction.List(client, account.id)
 * Pagination
 * Attachments
 * Annotate transaction
-* Refresh token
 * Better support for error code: 405, 406, 429, 500, 504
 
 ## LICENSE

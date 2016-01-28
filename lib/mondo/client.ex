@@ -2,12 +2,13 @@ defmodule Mondo.Client do
   @moduledoc """
   """
 
-  defstruct access_token: nil, client_id: nil, expires_in: nil,
-            refresh_token: nil, token_type: nil, user_id: nil
+  defstruct access_token: nil, client_id: nil, client_secret: nil,
+            expires_in: nil, refresh_token: nil, token_type: nil, user_id: nil
 
   @type t :: %__MODULE__{
     access_token: String.t,
     client_id: String.t,
+    client_secret: String.t,
     expires_in: non_neg_integer(),
     refresh_token: String.t,
     token_type: String.t,
@@ -18,7 +19,7 @@ defmodule Mondo.Client do
 
   def authenticate(client_id, client_secret, username, password) do
     req_body = %{
-      grant_type: "password",
+      grant_type: :password,
       client_id: client_id,
       client_secret: client_secret,
       username: username,
@@ -26,8 +27,23 @@ defmodule Mondo.Client do
     }
 
     with {:ok, body} <- post(nil, "oauth2/token", req_body),
-         {:ok, client} <- Poison.decode(body, as: %Mondo.Client{}),
-    do: {:ok, client}
+         {:ok, client} <- Poison.decode(body, as: %Mondo.Client{}) do
+      {:ok, %Mondo.Client{client | client_secret: client_secret}}
+    end
+  end
+
+  def refresh(client) do
+    req_body = %{
+      grant_type: :refresh_token,
+      client_id: client.client_id,
+      client_secret: client.client_secret,
+      refresh_token: client.refresh_token
+    }
+
+    with {:ok, body} <- post(nil, "oauth2/token", req_body),
+         {:ok, new_client} <- Poison.decode(body, as: %Mondo.Client{}) do
+      {:ok, %Mondo.Client{new_client | client_secret: client.client_secret}}
+    end
   end
 
   def ping(client) do
