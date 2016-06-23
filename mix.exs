@@ -38,9 +38,9 @@ defmodule Mondo.Mixfile do
   defp deps do
     [{:httpoison, "~> 0.8"},
      {:plug, "~> 1.1"},
-     {:poison, "~> 2.0"},
+     {:poison, "~> 2.2"},
      {:ex_machina, "~> 0.6.1", only: :test},
-     {:bypass, "~> 0.1", only: :test}]
+     {:bypass, "~> 0.5", only: :test}]
   end
 
   defp description do
