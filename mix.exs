@@ -18,7 +18,13 @@ defmodule Mondo.Mixfile do
   # Type "mix help compile.app" for more information
   def application do
     applications = [:logger, :httpoison]
-    if Mix.env == :test, do: applications = [:ex_machina] ++ applications
+
+    applications = if Mix.env == :test do
+      [:ex_machina] ++ applications
+    else
+      applications
+    end
+
     [applications: applications]
   end
 
