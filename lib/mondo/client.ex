@@ -54,17 +54,12 @@ defmodule Mondo.Client do
 
   def request(client, method, path, params \\ :empty, body \\ "", headers \\ []) do
     url = url(path, params)
-
-    headers = [{"User-Agent", "#{@user_agent}/#{Mondo.version}"}] ++ headers
-
-    if client && client.access_token do
-      headers = [{"Authorization", "Bearer #{client.access_token}"}] ++ headers
-    end
-
-    if method == :post do
-      headers = [{"Content-Type", "application/x-www-form-urlencoded; charset=utf-8"}] ++ headers
-      body = Plug.Conn.Query.encode(body)
-    end
+    headers =
+      headers
+      |> put_headers_default
+      |> put_headers_access_token(client)
+      |> put_headers_for_method(method)
+    body = prepare_body(body, method)
 
     case HTTPoison.request(method, url, body, headers) do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
@@ -102,4 +97,22 @@ defmodule Mondo.Client do
       |> Map.put(:query, Plug.Conn.Query.encode(params))
     URI.to_string(uri)
   end
+
+  defp put_headers_default(headers) do
+    [{"User-Agent", "#{@user_agent}/#{Mondo.version}"} | headers]
+  end
+
+  defp put_headers_access_token(headers, nil), do: headers
+  defp put_headers_access_token(headers, %{access_token: nil}), do: headers
+  defp put_headers_access_token(headers, %{access_token: access_token}) do
+    [{"Authorization", "Bearer #{access_token}"} | headers]
+  end
+
+  defp put_headers_for_method(headers, :post) do
+    [{"Content-Type", "application/x-www-form-urlencoded; charset=utf-8"} | headers]
+  end
+  defp put_headers_for_method(headers, _), do: headers
+
+  defp prepare_body(body, :post), do: Plug.Conn.Query.encode(body)
+  defp prepare_body(body, _), do: body
 end
