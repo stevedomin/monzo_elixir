@@ -16,7 +16,7 @@ defmodule Mondo.ClientTest do
       Plug.Conn.resp(conn, 200, Poison.encode!(%Mondo.Client{}))
     end
     assert {:ok, _client} =
-           Mondo.Client.authenticate("client_id", "client_secret", "user", "pass")
+           Mondo.Client.authenticate("client_id", "client_secret", "authorization_code")
   end
 
   test "failed auth" do

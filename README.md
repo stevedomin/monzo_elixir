@@ -17,7 +17,7 @@ end
 ## Usage
 
 ```elixir
-iex> {:ok, client} = Mondo.Client.authenticate("client_id", "client_secret", "username", "password")
+iex> {:ok, client} = Mondo.Client.authenticate("client_id", "client_secret", "authorization_code")
 {:ok,
  %Mondo.Client{access_token: "access_token",
   client_id: "client_id", expires_in: 21600,

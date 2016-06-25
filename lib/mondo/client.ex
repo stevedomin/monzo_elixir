@@ -17,13 +17,12 @@ defmodule Mondo.Client do
 
   @user_agent "mondo-elixir"
 
-  def authenticate(client_id, client_secret, username, password) do
+  def authenticate(client_id, client_secret, authorization_code) do
     req_body = %{
-      grant_type: :password,
+      grant_type: :authorization_code,
       client_id: client_id,
       client_secret: client_secret,
-      username: username,
-      password: password
+      code: authorization_code
     }
 
     with {:ok, body} <- post(nil, "oauth2/token", req_body),
