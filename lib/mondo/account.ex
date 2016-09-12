@@ -1,6 +1,6 @@
-defmodule Mondo.Account do
+defmodule Monzo.Account do
   @moduledoc """
-  [Mondo API reference](https://getmondo.co.uk/docs/#accounts)
+  [Monzo API reference](https://monzo.com/docs/#accounts)
   """
 
   @endpoint "accounts"
@@ -16,10 +16,10 @@ defmodule Mondo.Account do
   @doc """
   List accounts
   """
-  @spec list(MondoClient.t) :: {:ok, [t]} | {:error, Mondo.Error.t}
+  @spec list(MonzoClient.t) :: {:ok, [t]} | {:error, Monzo.Error.t}
   def list(client) do
-    with {:ok, body} <- Mondo.Client.get(client, @endpoint),
-         {:ok, %{"accounts" => accounts}} <- Poison.decode(body, as: %{"accounts" => [%Mondo.Account{}]}),
+    with {:ok, body} <- Monzo.Client.get(client, @endpoint),
+         {:ok, %{"accounts" => accounts}} <- Poison.decode(body, as: %{"accounts" => [%Monzo.Account{}]}),
     do: {:ok, accounts}
   end
 end

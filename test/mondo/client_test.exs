@@ -1,10 +1,10 @@
-defmodule Mondo.ClientTest do
+defmodule Monzo.ClientTest do
   use ExUnit.Case
-  import Mondo.Factory
+  import Monzo.Factory
 
   setup do
     bypass = Bypass.open
-    Application.put_env(:mondo, :endpoint, "http://localhost:#{bypass.port}")
+    Application.put_env(:monzo, :endpoint, "http://localhost:#{bypass.port}")
     client = build(:client)
     {:ok, bypass: bypass, client: client}
   end
@@ -13,10 +13,10 @@ defmodule Mondo.ClientTest do
     Bypass.expect bypass, fn conn ->
       assert "/oauth2/token" == conn.request_path
       assert "POST" == conn.method
-      Plug.Conn.resp(conn, 200, Poison.encode!(%Mondo.Client{}))
+      Plug.Conn.resp(conn, 200, Poison.encode!(%Monzo.Client{}))
     end
     assert {:ok, _client} =
-           Mondo.Client.authenticate("client_id", "client_secret", "authorization_code")
+           Monzo.Client.authenticate("client_id", "client_secret", "authorization_code")
   end
 
   test "failed auth" do
@@ -26,11 +26,11 @@ defmodule Mondo.ClientTest do
     Bypass.expect bypass, fn conn ->
       assert "/oauth2/token" == conn.request_path
       assert "POST" == conn.method
-      new_client = %Mondo.Client{client | access_token: "new_token"}
+      new_client = %Monzo.Client{client | access_token: "new_token"}
       Plug.Conn.resp(conn, 200, Poison.encode!(new_client))
     end
     assert {:ok, client} =
-           Mondo.Client.refresh(client)
+           Monzo.Client.refresh(client)
     assert client.access_token == "new_token"
   end
 
@@ -45,7 +45,7 @@ defmodule Mondo.ClientTest do
       assert "GET" == conn.method
       Plug.Conn.resp(conn, 200, Poison.encode!(response))
     end
-    assert {:ok, response} == Mondo.Client.ping(client)
+    assert {:ok, response} == Monzo.Client.ping(client)
   end
 
   test "ping with an unauthenticated client", %{bypass: bypass} do
@@ -55,6 +55,6 @@ defmodule Mondo.ClientTest do
       assert "GET" == conn.method
       Plug.Conn.resp(conn, 200, Poison.encode!(response))
     end
-    assert {:ok, response} == Mondo.Client.ping(%Mondo.Client{})
+    assert {:ok, response} == Monzo.Client.ping(%Monzo.Client{})
   end
 end

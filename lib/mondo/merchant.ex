@@ -1,9 +1,9 @@
-defmodule Mondo.Merchant do
+defmodule Monzo.Merchant do
   defstruct address: nil, category: nil, created: nil, emoji: nil, group_id: nil,
             id: nil, logo: nil, name: nil, online: nil
 
   @type t :: %__MODULE__{
-    address: Mondo.Address.t,
+    address: Monzo.Address.t,
     category: String.t,
     created: String.t,
     emoji: String.t,

@@ -1,8 +1,8 @@
-defmodule Mondo.Factory do
+defmodule Monzo.Factory do
   use ExMachina
 
   def factory(:account) do
-    %Mondo.Account{
+    %Monzo.Account{
       created: "2015-10-30T23:00:00Z",
       description: "Tony Stark's Account",
       id: sequence(:id, &"id-#{&1}")
@@ -10,7 +10,7 @@ defmodule Mondo.Factory do
   end
 
   def factory(:balance) do
-    %Mondo.Balance{
+    %Monzo.Balance{
       balance: 5000,
       currency: "GBP",
       spend_today: 0
@@ -18,7 +18,7 @@ defmodule Mondo.Factory do
   end
 
   def factory(:client) do
-    %Mondo.Client{
+    %Monzo.Client{
       access_token: sequence(:access_token, &"access-token-#{&1}"),
       client_id: sequence(:client_id, &"client-id-#{&1}"),
       expires_in: 120,
@@ -29,7 +29,7 @@ defmodule Mondo.Factory do
   end
 
   def factory(:feed_basic_item) do
-    %Mondo.Feed.BasicItem{
+    %Monzo.Feed.BasicItem{
       background_color: 0xDC1405,
       body: "The arc reactor is costing you about 10m a day",
       body_color: 0xEFCE0B,
@@ -40,7 +40,7 @@ defmodule Mondo.Factory do
   end
 
   def factory(:merchant) do
-    %Mondo.Merchant{
+    %Monzo.Merchant{
       address: nil,
       category: "shopping",
       created: "2015-10-30T10:00:00.000Z",
@@ -54,7 +54,7 @@ defmodule Mondo.Factory do
   end
 
   def factory(:address) do
-    %Mondo.Address{
+    %Monzo.Address{
       address: "85 Albert Embankment",
       approximate: false,
       city: "London",
@@ -70,7 +70,7 @@ defmodule Mondo.Factory do
   end
 
   def factory(:transaction) do
-    %Mondo.Transaction{
+    %Monzo.Transaction{
       account_balance: 100000,
       amount: 50000,
       created: "2015-12-24T23:00:00Z",
@@ -88,7 +88,7 @@ defmodule Mondo.Factory do
   end
 
   def factory(:webhook) do
-    %Mondo.Webhook{
+    %Monzo.Webhook{
       account_id: "acc_01",
       id: sequence(:id, &"webhook_#{&1}"),
       url: "https://theavengers.com/webhook",

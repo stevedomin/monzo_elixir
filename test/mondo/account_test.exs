@@ -1,12 +1,12 @@
-defmodule Mondo.AccountTest do
+defmodule Monzo.AccountTest do
   use ExUnit.Case
-  import Mondo.Factory
+  import Monzo.Factory
 
-  alias Mondo.Account
+  alias Monzo.Account
 
   setup_all do
     bypass = Bypass.open
-    Application.put_env(:mondo, :endpoint, "http://localhost:#{bypass.port}")
+    Application.put_env(:monzo, :endpoint, "http://localhost:#{bypass.port}")
     client = build(:client)
     {:ok, bypass: bypass, client: client}
   end

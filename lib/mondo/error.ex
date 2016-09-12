@@ -1,6 +1,6 @@
-defmodule Mondo.Error do
+defmodule Monzo.Error do
   @moduledoc """
-  [Mondo API reference](https://getmondo.co.uk/docs/#errors)
+  [Monzo API reference](https://monzo.com/docs/#errors)
   """
 
   defstruct code: nil, message: nil, params: nil

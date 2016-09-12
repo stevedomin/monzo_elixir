@@ -1,8 +1,8 @@
-defmodule Mondo.FeedTest do
+defmodule Monzo.FeedTest do
   use ExUnit.Case
-  import Mondo.Factory
+  import Monzo.Factory
 
-  alias Mondo.Feed
+  alias Monzo.Feed
 
   def parse(conn, opts \\ []) do
     opts = Keyword.put_new(opts, :parsers, [Plug.Parsers.URLENCODED])
@@ -11,7 +11,7 @@ defmodule Mondo.FeedTest do
 
   setup_all do
     bypass = Bypass.open
-    Application.put_env(:mondo, :endpoint, "http://localhost:#{bypass.port}")
+    Application.put_env(:monzo, :endpoint, "http://localhost:#{bypass.port}")
     client = build(:client)
     {:ok, bypass: bypass, client: client}
   end

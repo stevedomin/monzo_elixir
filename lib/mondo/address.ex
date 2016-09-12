@@ -1,4 +1,4 @@
-defmodule Mondo.Address do
+defmodule Monzo.Address do
   defstruct address: nil, approximate: nil, city: nil, country: nil,
             formatted: nil, latitude: nil, longitude: nil, postcode: nil,
             region: nil, short_formatted: nil, zoom_level: nil

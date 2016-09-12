@@ -1,8 +1,8 @@
-defmodule Mondo.Mixfile do
+defmodule Monzo.Mixfile do
   use Mix.Project
 
   def project do
-    [app: :mondo,
+    [app: :monzo,
      version: "0.2.0",
      elixir: "~> 1.2",
      elixirc_paths: elixirc_paths(Mix.env),
@@ -51,13 +51,13 @@ defmodule Mondo.Mixfile do
 
   defp description do
     """
-    An Elixir client for the Mondo API.
+    An Elixir client for the Monzo API.
     """
   end
 
   defp package do
     [maintainers: ["Steve Domin"],
      licenses: ["MIT"],
-     links: %{"GitHub" => "https://github.com/stevedomin/mondo_elixir"}]
+     links: %{"GitHub" => "https://github.com/stevedomin/monzo_elixir"}]
   end
 end

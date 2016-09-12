@@ -1,42 +1,42 @@
-# Mondo Elixir
+# Monzo Elixir
 
-[![Build Status](https://travis-ci.org/stevedomin/mondo_elixir.svg?branch=master)](https://travis-ci.org/stevedomin/mondo_elixir)
+[![Build Status](https://travis-ci.org/stevedomin/monzo_elixir.svg?branch=master)](https://travis-ci.org/stevedomin/monzo_elixir)
 
-An Elixir client for the [Mondo](https://getmondo.co.uk/) API.
+An Elixir client for the [Monzo](https://getmonzo.co.uk/) API.
 
 ## Installation
 
-Add mondo to your list of dependencies in `mix.exs`:
+Add monzo to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
-  [{:mondo, "~> 0.2.0"}]
+  [{:monzo, "~> 0.2.0"}]
 end
 ```
 
 ## Usage
 
 ```elixir
-iex> {:ok, client} = Mondo.Client.authenticate("client_id", "client_secret", "authorization_code")
+iex> {:ok, client} = Monzo.Client.authenticate("client_id", "client_secret", "authorization_code")
 {:ok,
- %Mondo.Client{access_token: "access_token",
+ %Monzo.Client{access_token: "access_token",
   client_id: "client_id", expires_in: 21600,
   refresh_token: "refresh_token",
   token_type: "Bearer", user_id: "user_id"}}
 
-iex> {:ok, [account]} = Mondo.Account.list(client)
+iex> {:ok, [account]} = Monzo.Account.list(client)
 {:ok,
- [%Mondo.Account{created: "2008-05-02T19:00:00.000Z",
+ [%Monzo.Account{created: "2008-05-02T19:00:00.000Z",
    description: "Tony Stark", id: "acc_01"}]}
 
-iex> Mondo.Transaction.List(client, account.id)
+iex> Monzo.Transaction.List(client, account.id)
 {:ok,
- [%Mondo.Transaction{account_balance: 10000, amount: -5000, category: "entertainment",
+ [%Monzo.Transaction{account_balance: 10000, amount: -5000, category: "entertainment",
    created: "2008-05-09T18:00:00Z", currency: "GBP", decline_reason: nil,
    description: "AVENGERS LTD", id: "tx_01",
    is_load: true, merchant: "merch_01", metadata: %{}, notes: "",
    settled: "2008-05-09T19:00:00Z"},
-  %Mondo.Transaction{account_balance: 4000, amount: -1000, category: "cash",
+  %Monzo.Transaction{account_balance: 4000, amount: -1000, category: "cash",
    created: "2008-05-10T18:00:00Z", currency: "GBP", decline_reason: nil,
    description: "NEW AVENGERS",
    id: "tx_02", is_load: false,
@@ -53,5 +53,5 @@ iex> Mondo.Transaction.List(client, account.id)
 
 ## LICENSE
 
-See [LICENSE](https://github.com/stevedomin/mondo_elixir/blob/master/LICENSE)
+See [LICENSE](https://github.com/stevedomin/monzo_elixir/blob/master/LICENSE)
 

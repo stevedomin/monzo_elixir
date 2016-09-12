@@ -1,6 +1,6 @@
-defmodule Mondo.Balance do
+defmodule Monzo.Balance do
   @moduledoc """
-  [Mondo API reference](https://getmondo.co.uk/docs/#balance)
+  [Monzo API reference](https://monzo.com/docs/#balance)
   """
 
   @endpoint "balance"
@@ -16,10 +16,10 @@ defmodule Mondo.Balance do
   @doc """
   Get balance
   """
-  @spec get(Mondo.Client.t, String.t) :: {:ok, t} | {:error, Mondo.Error.t}
+  @spec get(Monzo.Client.t, String.t) :: {:ok, t} | {:error, Monzo.Error.t}
   def get(client, account_id) do
-    with {:ok, body} <- Mondo.Client.get(client, @endpoint, %{"account_id" => account_id}),
-         {:ok, balance} <- Poison.decode(body, as: %Mondo.Balance{}),
+    with {:ok, body} <- Monzo.Client.get(client, @endpoint, %{"account_id" => account_id}),
+         {:ok, balance} <- Poison.decode(body, as: %Monzo.Balance{}),
          do: {:ok, balance}
   end
 end

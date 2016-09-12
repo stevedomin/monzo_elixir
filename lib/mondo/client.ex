@@ -1,4 +1,4 @@
-defmodule Mondo.Client do
+defmodule Monzo.Client do
   @moduledoc """
   """
 
@@ -15,7 +15,7 @@ defmodule Mondo.Client do
     user_id: String.t
   }
 
-  @user_agent "mondo-elixir"
+  @user_agent "monzo-elixir"
 
   def authenticate(client_id, client_secret, authorization_code) do
     req_body = %{
@@ -26,8 +26,8 @@ defmodule Mondo.Client do
     }
 
     with {:ok, body} <- post(nil, "oauth2/token", req_body),
-         {:ok, client} <- Poison.decode(body, as: %Mondo.Client{}) do
-      {:ok, %Mondo.Client{client | client_secret: client_secret}}
+         {:ok, client} <- Poison.decode(body, as: %Monzo.Client{}) do
+      {:ok, %Monzo.Client{client | client_secret: client_secret}}
     end
   end
 
@@ -40,8 +40,8 @@ defmodule Mondo.Client do
     }
 
     with {:ok, body} <- post(nil, "oauth2/token", req_body),
-         {:ok, new_client} <- Poison.decode(body, as: %Mondo.Client{}) do
-      {:ok, %Mondo.Client{new_client | client_secret: client.client_secret}}
+         {:ok, new_client} <- Poison.decode(body, as: %Monzo.Client{}) do
+      {:ok, %Monzo.Client{new_client | client_secret: client.client_secret}}
     end
   end
 
@@ -66,11 +66,11 @@ defmodule Mondo.Client do
       {:ok, %HTTPoison.Response{status_code: 400, body: body}} ->
         IO.inspect body
       {:ok, %HTTPoison.Response{status_code: 401, body: body}} ->
-        {:error, Poison.decode!(body, as: Mondo.Error)}
+        {:error, Poison.decode!(body, as: Monzo.Error)}
       {:ok, %HTTPoison.Response{status_code: 403, body: body}} ->
-        {:error, Poison.decode!(body, as: Mondo.Error)}
+        {:error, Poison.decode!(body, as: Monzo.Error)}
       {:ok, %HTTPoison.Response{status_code: 404, body: body}} ->
-        {:error, Poison.decode!(body, as: Mondo.Error)}
+        {:error, Poison.decode!(body, as: Monzo.Error)}
       {:ok, _response} = resp -> resp
       {:error, %HTTPoison.Error{} = err} -> err
     end
@@ -88,7 +88,7 @@ defmodule Mondo.Client do
     request(client, :delete, path, params)
   end
 
-  def url(path, :empty), do: "#{Application.get_env(:mondo, :endpoint)}/#{path}"
+  def url(path, :empty), do: "#{Application.get_env(:monzo, :endpoint)}/#{path}"
   def url(path, params) do
     uri =
       url(path, :empty)
@@ -98,7 +98,7 @@ defmodule Mondo.Client do
   end
 
   defp put_headers_default(headers) do
-    [{"User-Agent", "#{@user_agent}/#{Mondo.version}"} | headers]
+    [{"User-Agent", "#{@user_agent}/#{Monzo.version}"} | headers]
   end
 
   defp put_headers_access_token(headers, nil), do: headers

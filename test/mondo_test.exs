@@ -1,4 +1,4 @@
-defmodule MondoTest do
+defmodule MonzoTest do
   use ExUnit.Case
-  doctest Mondo
+  doctest Monzo
 end

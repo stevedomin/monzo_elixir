@@ -1,6 +1,6 @@
-defmodule Mondo.Webhook do
+defmodule Monzo.Webhook do
   @moduledoc """
-  [Mondo API reference](https://getmondo.co.uk/docs/#webhooks)
+  [Monzo API reference](https://monzo.com/docs/#webhooks)
   """
 
   @endpoint "webhooks"
@@ -16,33 +16,33 @@ defmodule Mondo.Webhook do
   @doc """
   List all web hooks registered on an account
   """
-  @spec list(Mondo.Client.t, String.t) :: {:ok, [Mondo.Webhook.t]} | {:error, Mondo.Error.t}
+  @spec list(Monzo.Client.t, String.t) :: {:ok, [Monzo.Webhook.t]} | {:error, Monzo.Error.t}
   def list(client, account_id) do
-    with {:ok, body} <- Mondo.Client.get(client, @endpoint, %{"account_id" => account_id}),
-         {:ok, %{"webhooks" => webhooks}} <- Poison.decode(body, as: %{"webhooks" => [%Mondo.Webhook{}]}),
+    with {:ok, body} <- Monzo.Client.get(client, @endpoint, %{"account_id" => account_id}),
+         {:ok, %{"webhooks" => webhooks}} <- Poison.decode(body, as: %{"webhooks" => [%Monzo.Webhook{}]}),
     do: {:ok, webhooks}
   end
 
   @doc """
   Register a web hook
   """
-  @spec register(Mondo.Client.t, String.t, String.t) :: {:ok, Mondo.Webhook.t} | {:error, Mondo.Error.t}
+  @spec register(Monzo.Client.t, String.t, String.t) :: {:ok, Monzo.Webhook.t} | {:error, Monzo.Error.t}
   def register(client, account_id, url) do
     req_body = %{
       account_id: account_id,
       url: url
     }
-    with {:ok, body} <- Mondo.Client.post(client, @endpoint, req_body),
-         {:ok, %{"webhook" => webhook}} <- Poison.decode(body, as: %{"webhook" => %Mondo.Webhook{}}),
+    with {:ok, body} <- Monzo.Client.post(client, @endpoint, req_body),
+         {:ok, %{"webhook" => webhook}} <- Poison.decode(body, as: %{"webhook" => %Monzo.Webhook{}}),
     do: {:ok, webhook}
   end
 
   @doc """
   Delete a webhook
   """
-  @spec delete(Mondo.Client.t, String.t) :: :ok | {:error, Mondo.Error.t}
+  @spec delete(Monzo.Client.t, String.t) :: :ok | {:error, Monzo.Error.t}
   def delete(client, webhook_id) do
-    case Mondo.Client.delete(client, @endpoint <> "/" <> webhook_id) do
+    case Monzo.Client.delete(client, @endpoint <> "/" <> webhook_id) do
       {:ok, _body} -> :ok
       {:error, _reason} = err -> err
     end

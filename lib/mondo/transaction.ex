@@ -1,6 +1,6 @@
-defmodule Mondo.Transaction do
+defmodule Monzo.Transaction do
   @moduledoc """
-  [Mondo API reference](https://getmondo.co.uk/docs/#transactions)
+  [Monzo API reference](https://monzo.com/docs/#transactions)
   """
 
   @endpoint "transactions"
@@ -23,7 +23,7 @@ defmodule Mondo.Transaction do
     is_load: boolean,
     local_amount: String.t,
     local_currency: String.t,
-    merchant: Mondo.Merchant.t,
+    merchant: Monzo.Merchant.t,
     metadata: map,
     notes: String.t,
     settled: boolean
@@ -32,10 +32,10 @@ defmodule Mondo.Transaction do
   @doc """
   List transactions
   """
-  @spec list(Mondo.Client.t, String.t) :: {:ok, [Mondo.Transaction.t]} | {:error, Mondo.Error.t}
+  @spec list(Monzo.Client.t, String.t) :: {:ok, [Monzo.Transaction.t]} | {:error, Monzo.Error.t}
   def list(client, account_id, opts \\ []) do
     {params, as} = Keyword.get(opts, :merchant, false) |> with_merchant(%{"account_id" => account_id})
-    with {:ok, body} <- Mondo.Client.get(client, @endpoint, params),
+    with {:ok, body} <- Monzo.Client.get(client, @endpoint, params),
          {:ok, %{"transactions" => transactions}} <- Poison.decode(body, as: %{"transactions" => [as]}),
     do: {:ok, transactions}
   end
@@ -43,24 +43,24 @@ defmodule Mondo.Transaction do
   @doc """
   Get a transaction
   """
-  @spec get(Mondo.Client.t, String.t) :: {:ok, Mondo.Transaction.t} | {:error, Mondo.Error.t}
+  @spec get(Monzo.Client.t, String.t) :: {:ok, Monzo.Transaction.t} | {:error, Monzo.Error.t}
   def get(client, transaction_id, opts \\ []) do
     {params, as} = Keyword.get(opts, :merchant, false) |> with_merchant(%{})
 
-    with {:ok, body} <- Mondo.Client.get(client, @endpoint <> "/" <> transaction_id, params),
+    with {:ok, body} <- Monzo.Client.get(client, @endpoint <> "/" <> transaction_id, params),
          {:ok, %{"transaction" => transaction}} <- Poison.decode(body, as: %{"transaction" => as}),
     do: {:ok, transaction}
   end
 
   @doc false
-  @spec with_merchant(boolean, map) :: {map, Mondo.Transaction.t}
+  @spec with_merchant(boolean, map) :: {map, Monzo.Transaction.t}
   defp with_merchant(true, params) do
     params = Map.put(params, :expand, ["merchant"])
-    as = %Mondo.Transaction{merchant: %Mondo.Merchant{address: %Mondo.Address{}}}
+    as = %Monzo.Transaction{merchant: %Monzo.Merchant{address: %Monzo.Address{}}}
     {params, as}
   end
   defp with_merchant(_, params) do
-    as = %Mondo.Transaction{}
+    as = %Monzo.Transaction{}
     {params, as}
   end
 end
