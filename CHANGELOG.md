@@ -1,5 +1,11 @@
 ## Changelog
 
+## v0.3.0 - 2016-09-12
+
+* Mondo is now Monzo
+* Bump HTTPoison to 0.9
+* Bump Plug to 1.2
+
 ## v0.2.0 - 2016-06-25
 ### Added
 * Optionally expand merchant info when fetching transactions
