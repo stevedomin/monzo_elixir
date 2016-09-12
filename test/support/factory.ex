@@ -1,7 +1,7 @@
 defmodule Monzo.Factory do
   use ExMachina
 
-  def factory(:account) do
+  def account_factory() do
     %Monzo.Account{
       created: "2015-10-30T23:00:00Z",
       description: "Tony Stark's Account",
@@ -9,7 +9,7 @@ defmodule Monzo.Factory do
     }
   end
 
-  def factory(:balance) do
+  def balance_factory() do
     %Monzo.Balance{
       balance: 5000,
       currency: "GBP",
@@ -17,7 +17,7 @@ defmodule Monzo.Factory do
     }
   end
 
-  def factory(:client) do
+  def client_factory() do
     %Monzo.Client{
       access_token: sequence(:access_token, &"access-token-#{&1}"),
       client_id: sequence(:client_id, &"client-id-#{&1}"),
@@ -28,7 +28,7 @@ defmodule Monzo.Factory do
     }
   end
 
-  def factory(:feed_basic_item) do
+  def feed_basic_item_factory() do
     %Monzo.Feed.BasicItem{
       background_color: 0xDC1405,
       body: "The arc reactor is costing you about 10m a day",
@@ -39,7 +39,7 @@ defmodule Monzo.Factory do
     }
   end
 
-  def factory(:merchant) do
+  def merchant_factory() do
     %Monzo.Merchant{
       address: nil,
       category: "shopping",
@@ -53,7 +53,7 @@ defmodule Monzo.Factory do
     }
   end
 
-  def factory(:address) do
+  def address_factory() do
     %Monzo.Address{
       address: "85 Albert Embankment",
       approximate: false,
@@ -69,7 +69,7 @@ defmodule Monzo.Factory do
     }
   end
 
-  def factory(:transaction) do
+  def transaction_factory() do
     %Monzo.Transaction{
       account_balance: 100000,
       amount: 50000,
@@ -87,7 +87,7 @@ defmodule Monzo.Factory do
     }
   end
 
-  def factory(:webhook) do
+  def webhook_factory() do
     %Monzo.Webhook{
       account_id: "acc_01",
       id: sequence(:id, &"webhook_#{&1}"),
