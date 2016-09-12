@@ -42,8 +42,8 @@ defmodule Monzo.Mixfile do
   #
   # Type "mix help deps" for more examples and options
   defp deps do
-    [{:httpoison, "~> 0.8"},
-     {:plug, "~> 1.1"},
+    [{:httpoison, "~> 0.9"},
+     {:plug, "~> 1.2"},
      {:poison, "~> 2.2"},
      {:ex_machina, "~> 1.0", only: :test},
      {:bypass, "~> 0.5", only: :test}]
