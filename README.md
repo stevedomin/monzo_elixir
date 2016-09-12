@@ -10,7 +10,7 @@ Add monzo to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
-  [{:monzo, "~> 0.2.0"}]
+  [{:monzo, "~> 0.3.0"}]
 end
 ```
 
