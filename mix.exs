@@ -45,7 +45,7 @@ defmodule Monzo.Mixfile do
     [{:httpoison, "~> 1.0"},
      {:plug, "~> 1.2"},
      {:poison, "~> 3.1"},
-     {:ex_machina, "~> 1.0", only: :test},
+     {:ex_machina, "~> 2.1", only: :test},
      {:bypass, "~> 0.5", only: :test},
      {:ex_doc, "~> 0.18.3", only: :docs}]
   end
