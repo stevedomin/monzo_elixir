@@ -1,0 +1,20 @@
+version: 2
+updates:
+- package-ecosystem: mix
+  directory: "/"
+  schedule:
+    interval: daily
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: ex_doc
+    versions:
+    - 0.23.0
+    - 0.24.0
+    - 0.24.1
+  - dependency-name: ex_machina
+    versions:
+    - 2.5.0
+    - 2.6.0
+  - dependency-name: plug
+    versions:
+    - 1.11.0
